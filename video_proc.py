@@ -5,7 +5,7 @@ from moviepy.editor import VideoFileClip
 from pydub import AudioSegment
 from pytube import YouTube, Playlist
 
-from support_file import clean_and_format_string
+from support_file import clean_and_format_string, create_file_detail
 
 
 def get_playlist_urls(playlist_url):
@@ -53,7 +53,7 @@ def format_frame_name(seconds):
     # return f"frame_{minutes:02d}_{seconds:02d}.png"
     return f"{minutes:02d}_{seconds:02d}.png"
 
-def segment_audio(audio_path, segment_duration_seconds=20):
+def segment_audio(audio_path, aux_folder,segment_duration_seconds=20):
     """
     Segment audio into smaller parts based on the given duration.
     """
@@ -61,7 +61,8 @@ def segment_audio(audio_path, segment_duration_seconds=20):
     audio = AudioSegment.from_file(audio_path)
 
     base_path, ext = os.path.splitext(audio_path)
-    segment_dir = f"{base_path}_segments"
+    # segment_dir = f"{base_path}_segments"
+    segment_dir=os.path.join(aux_folder,'segments')
     os.makedirs(segment_dir, exist_ok=True)
 
     segment_paths = []
@@ -80,11 +81,12 @@ def get_outer_child_folder_name(path):
     else:
         # If no extension, return as is
         return path
-def capture_frames(video_path, interval=5, output_folder='frames'):
+def capture_frames(video_path, aux_folder,interval=5):
     """
     Capture frames from a video at a specified interval and save them to an output folder.
     """
-    output_folder = get_outer_child_folder_name(output_folder)
+    # output_folder = get_outer_child_folder_name(output_folder)
+    output_folder=os.path.join(aux_folder,'snapshot')
     os.makedirs(output_folder, exist_ok=True)
 
     all_paths = []
@@ -99,32 +101,16 @@ def capture_frames(video_path, interval=5, output_folder='frames'):
     return all_paths
 
 
-def create_file_detail(output_fname, url='From Local Video'):
-    """
-    Create file details for saving and return as a dictionary.
-    """
-    local_save_dir = '/home/rpb/IdeaProjects/my_gpu_env'
-    gdrive = '/content/drive/MyDrive/'
-    save_directory = gdrive if os.path.exists(gdrive) else local_save_dir
 
-    vid_fname = f"{output_fname[:20]}.mp4"
-    fname_word = os.path.join(save_directory, f"{output_fname}.docx")
 
-    return {
-        'url': url,
-        'video_title_clean': output_fname,
-        'vid_fname': vid_fname,
-        'fname_word': fname_word
-    }
-
-def download_youtube_video(url, fname=None):
+def download_youtube_video(url,local_save_directory):
     """
     Download a YouTube video and return file details.
     """
     yt = YouTube(url)
     output_fname = clean_and_format_string(yt.title)
-    file_details = create_file_detail(output_fname, url)
-
+    file_details = create_file_detail(output_fname, url,local_save_directory=local_save_directory)
+    file_details ['vid_fname'] = os.path.join(file_details['save_directory_aux'],f"{output_fname[:20]}.mp4")
     stream = yt.streams.filter(progressive=True, file_extension='mp4').first()
     stream.download(filename=file_details['vid_fname'])
 

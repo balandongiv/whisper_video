@@ -5,13 +5,13 @@ from PIL import Image
 from support_file import clean_and_format_string
 
 
-def create_docx_for_each_title(titles, err_or, local_save_directory):
+def create_docx_for_each_title(titles, err_or, save_directory):
     """
     Create a DOCX file for each title.
     """
     sanitized_title = clean_and_format_string(titles)
-    gdrive = '/content/drive/MyDrive/'
-    save_directory = gdrive if os.path.exists(gdrive) else local_save_directory
+    # gdrive = '/content/drive/MyDrive/'
+    # save_directory = gdrive if os.path.exists(gdrive) else local_save_directory
     filename = os.path.join(save_directory, f'{sanitized_title}.docx')
 
     if not os.path.exists(filename):
