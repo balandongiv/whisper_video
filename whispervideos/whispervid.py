@@ -6,13 +6,13 @@ import pandas as pd
 from tqdm import tqdm
 
 # Import your modules
-from whispervid.docs_creation import add_images_to_word_document, create_docx_for_failed_video
-from whispervid.support_file import get_filename_without_extension, \
+from whispervideos.docs_creation import add_images_to_word_document, create_docx_for_failed_video
+from whispervideos.support_file import get_filename_without_extension, \
     clean_and_format_string, get_desktop_path
-from whispervid.transcribe_video import safe_transcribe
-from whispervid.video_proc import (segment_audio, capture_frames, download_youtube_video, process_urls,
-                                   get_youtube_video_title,
-                                   create_file_details)
+from whispervideos.transcribe_video import safe_transcribe
+from whispervideos.video_proc import (segment_audio, capture_frames, download_youtube_video, process_urls,
+                                      get_youtube_video_title,
+                                      create_file_details)
 
 # Setting up logging
 logging.basicConfig(level=logging.INFO)

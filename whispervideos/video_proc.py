@@ -6,7 +6,7 @@ from moviepy.editor import VideoFileClip
 from pydub import AudioSegment
 from pytube import YouTube, Playlist
 
-from whispervid.support_file import clean_and_format_string, create_file_details
+from whispervideos.support_file import clean_and_format_string, create_file_details
 
 # Setting up logging
 logging.basicConfig(level=logging.INFO)

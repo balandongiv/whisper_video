@@ -5,7 +5,7 @@ from PIL import Image
 from docx import Document
 from docx.shared import Inches
 
-from whispervid.support_file import clean_and_format_string
+from whispervideos.support_file import clean_and_format_string
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
