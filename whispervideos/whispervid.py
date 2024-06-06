@@ -73,5 +73,5 @@ class VideoProcessor:
             except Exception as e:
                 logger.error(f"An error occurred while processing {youtube_url}: {e}")
                 ytitle = get_youtube_video_title(youtube_url)
-                create_docx_for_failed_video(ytitle, e, self.local_save_directory)
+                create_docx_for_failed_video(ytitle, youtube_url,e, self.local_save_directory)
 

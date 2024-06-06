@@ -10,7 +10,7 @@ from whispervideos.support_file import clean_and_format_string
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def create_docx_for_failed_video(titles, error_message, save_directory):
+def create_docx_for_failed_video(titles, url,error_message, save_directory):
     """
     Create a DOCX file with the given title in the specified directory.
     The function checks if a file with the same name already exists,
@@ -21,6 +21,13 @@ def create_docx_for_failed_video(titles, error_message, save_directory):
     error_message (str): Error message to be included in the document (currently unused).
     save_directory (str): Directory path where the DOCX file will be saved.
     """
+    if titles is None:
+        base_url = "https://www.youtube.com"
+        flattened_url = url[len(base_url):]
+        # Replace all slashes with underscores
+        titles= flattened_url.replace('/', '_')
+        # logging.error("Title is None. Skipping creation of DOCX file.")
+        # return
     sanitized_title = clean_and_format_string(titles)
     filename = os.path.join(save_directory, f'{sanitized_title}.docx')
 
